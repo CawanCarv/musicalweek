@@ -1,6 +1,6 @@
-import { getDictionary } from './dictionaries'
+import { getDictionary } from '../utils/dictionaries'
  
 export default async function Page({ params: { lang } }) {
   const dict = await getDictionary(lang) // en
-  return <button>{dict.hello}</button> // Add to Cart
+  return <h1>{dict.hello}</h1> // Add to Cart
 }

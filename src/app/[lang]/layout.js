@@ -1,6 +1,6 @@
 import '@/globals.css'
 import { ThemeProvider } from '@/providers'
-import { ThemeSwitcher } from "@/components/themeSwitcher";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 import { Inter } from 'next/font/google'
 
