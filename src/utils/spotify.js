@@ -1,5 +1,3 @@
-'use server'
-
 export async function auth() {
   var urlencoded = new URLSearchParams();
   urlencoded.append("grant_type", "client_credentials");
@@ -29,6 +27,27 @@ export async function searchData(param) {
 
   const res = await fetch(
     `https://api.spotify.com/v1/search?q=${param}&type=track&market=BR&limit=24`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    }
+  );
+ 
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to search data')
+  }
+ 
+  return res.json()
+}
+
+export async function getMusic(id_music) {
+  const token = await auth();
+
+  const res = await fetch(
+    ` https://api.spotify.com/v1/tracks/${id_music}`,
     {
       method: "GET",
       headers: {

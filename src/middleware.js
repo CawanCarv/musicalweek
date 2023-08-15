@@ -4,7 +4,6 @@ import { match } from '@formatjs/intl-localematcher'
 
 let locales = ['pt', 'en']
 
-// Get the preferred locale, similar to above or using a library
 function getLocale(request) { 
     let headers = { 'accept-language': 'pt;q=0.5' }
     let languages = new Negotiator({ headers }).languages()

@@ -1,4 +1,4 @@
-import '@/globals.css'
+import '@/styles/globals.css'
 import { ThemeProvider } from '@/providers'
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 

@@ -1,5 +1,5 @@
-import { getDictionary } from '@/app/utils/dictionaries'
-import { searchData } from '@/app/utils/spotify'
+import { getDictionary } from '@/utils/dictionaries'
+import { searchData } from '@/utils/spotify'
 
 import { Music } from "@/components/search/Music";
 

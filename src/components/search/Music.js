@@ -5,9 +5,32 @@ import { useRouter } from "next/navigation";
 export const Music = ({ track }) => {
   const router = useRouter();
 
-  function handleClick() {
-    // const sala = await criaSala();
-    // router.push(`/sala/${sala.id}`);
+  async function handleClick(id_musica) {
+    const url =
+      "https://musicalweek-api.azurewebsites.net/endpoints/insert_fila.php";
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    const data = {
+      id_usuario: 1,
+      id_musica: id_musica,
+    };
+
+    let res = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      credentials: "include",
+      body: JSON.stringify(data),
+    })
+
+    if(res.ok && res.status == 200){
+      res = await res.json();
+
+      router.push(`/room/${res.id}`)
+    }else{
+      console.log("Erro")
+    }   
+
   }
 
   return (
