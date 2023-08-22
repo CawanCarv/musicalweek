@@ -1,7 +1,6 @@
 import { getDictionary } from "@/utils/dictionaries";
 import { getMusic } from "@/utils/spotify";
-
-import InputRange from 'react-input-range';
+import { MusicSlider } from "@/components/room/MusicSlider";
 
 export default async function Page({ params: { lang, id } }) {
   const dict = await getDictionary(lang);
@@ -17,21 +16,18 @@ export default async function Page({ params: { lang, id } }) {
       credentials: "include",
     }
   );
+  console.log(res);
+
   if (res.ok && res.status == 200) {
     const rooms = await res.json();
     // console.log(rooms);
     const music = await getMusic(rooms.musicas[rooms.musicas.length - 1].musica);
-    console.log(music.album.images)
+    console.log(rooms)
     return (
         <>
             {rooms.sala}
             <img src={music.album.images[1].url} alt="" />
-            <InputRange
-                maxValue={20}
-                minValue={0}
-                value={this.state.value}
-                onChange={value => this.setState({ value })} 
-            />
+            <MusicSlider />
         </>
     );
   } else {
