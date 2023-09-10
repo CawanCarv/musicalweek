@@ -1,6 +1,10 @@
+import Link from "next/link";
+
 import { getDictionary } from "@/utils/dictionaries";
 import { getMusic } from "@/utils/spotify";
+import { CarrousselRoom } from "@/components/room/CarrousselRoom";
 import { MusicSlider } from "@/components/room/MusicSlider";
+import { BsArrowLeft } from "react-icons/bs";
 
 export default async function Page({ params: { lang, id } }) {
   const dict = await getDictionary(lang);
@@ -16,19 +20,43 @@ export default async function Page({ params: { lang, id } }) {
       credentials: "include",
     }
   );
-  console.log(res);
 
   if (res.ok && res.status == 200) {
     const rooms = await res.json();
-    // console.log(rooms);
-    const music = await getMusic(rooms.musicas[rooms.musicas.length - 1].musica);
-    console.log(rooms)
+    const musics = await Promise.all(
+      rooms.musicas.map((music) => {
+        return getMusic(music.musica).then(data => {
+          const response = {
+            avaliacao_media: music.avaliacao_media,
+            nota_usuario: music.nota_usuario,
+            avaliacoes: music.avaliacoes,
+            name: data.name,
+            img: data.album.images[0].url,
+            artist: data.artists[0].name,
+            href: data.href
+          }
+
+          return response
+        });
+      })
+    );
+
     return (
-        <>
-            {rooms.sala}
-            <img src={music.album.images[1].url} alt="" />
-            <MusicSlider />
-        </>
+      <section className="py-10">
+        <header className="relative flex flex-col items-center justify-center text-center">
+          <h1 className="text-xl">{rooms.sala}</h1>
+          <span className="text-zinc-400">
+            {rooms.tempo_restante != null ? rooms.tempo_restante : "00:00:00"}
+          </span>
+          <Link className="absolute left-4" href="/search">
+            <BsArrowLeft className="text-2xl" />
+          </Link>
+        </header>
+        <main>
+          <CarrousselRoom musics={musics} />
+          <MusicSlider />
+        </main>
+      </section>
     );
   } else {
     console.log(res);
