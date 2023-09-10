@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getDictionary } from "@/utils/dictionaries";
 import { getMusic } from "@/utils/spotify";
 import { CarrousselRoom } from "@/components/room/CarrousselRoom";
-import { MusicSlider } from "@/components/room/MusicSlider";
 import { BsArrowLeft } from "react-icons/bs";
 
 export default async function Page({ params: { lang, id } }) {
@@ -52,10 +51,7 @@ export default async function Page({ params: { lang, id } }) {
             <BsArrowLeft className="text-2xl" />
           </Link>
         </header>
-        <main>
-          <CarrousselRoom musics={musics} />
-          <MusicSlider />
-        </main>
+        <CarrousselRoom musics={musics} />
       </section>
     );
   } else {
