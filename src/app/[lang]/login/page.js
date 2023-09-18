@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import Input from "@/components/form/Input";
@@ -9,7 +8,6 @@ import { isValidInput } from '@/components/form/validation';
 
 export default function Login() {
   const [message, setMessage] = useState('')
-  const router = useRouter()
 
   async function onLogin(formData) {
 
@@ -27,7 +25,7 @@ export default function Login() {
 
     const res = await login(formData)
     if (res.redirect === true) {
-      router.push('/search')
+      window.location.href = "/search"
     } else {
       setMessage(res.message)
     }
