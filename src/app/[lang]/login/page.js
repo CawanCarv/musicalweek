@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import Input from "@/components/form/Input";
@@ -8,6 +9,7 @@ import { isValidInput } from '@/components/form/validation';
 
 export default function Login() {
   const [message, setMessage] = useState('')
+  const router = useRouter()
 
   async function onLogin(formData) {
 
@@ -25,7 +27,7 @@ export default function Login() {
 
     const res = await login(formData)
     if (res.redirect === true) {
-      window.location.href = "/search"
+      router.push('/search')
     } else {
       setMessage(res.message)
     }
@@ -70,7 +72,14 @@ export default function Login() {
           >
               Entrar com Google
           </button> */}
-
+            <div className="flex items-center flex-col">
+              <Link
+                className="inline-block mt-10 align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                href="/esqueci-senha"
+              >
+                Esqueci minha senha
+              </Link>
+            </div>
             <div className="flex items-center flex-col">
               <Link
                 className="inline-block mt-10 align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
